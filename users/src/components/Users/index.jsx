@@ -20,7 +20,11 @@ export const Users = ({ items, isLoading, searchValue, onChangeSearchValue }) =>
       ) : (
         <ul className="users-list">
           {
-            items.map((obj) => (<User key={obj.id} {...obj}/>))
+            items.filter(obj => {
+              const fullName = (obj.first_name + obj.last_name).toLowerCase();
+              return fullName.includes(searchValue.toLowerCase()) || 
+              obj.email.toLowerCase().includes(searchValue.toLowerCase());
+            }).map((obj) => (<User key={obj.id} {...obj}/>))
           }
         </ul>
       )}
